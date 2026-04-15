@@ -6,6 +6,7 @@
     const driverTableVideo = document.getElementById("driverTableVideo");
     const raceSection = document.getElementById("raceSection");
     const teamSection = document.getElementById("teamSection");
+    const backButton = document.getElementById("backButton");
     const toggleSectionsButton = document.getElementById("toggleSectionsButton");
     const sectionVideos = [raceTableVideo, teamTableVideo, driverTableVideo].filter(Boolean);
 
@@ -128,6 +129,15 @@
         }, 420);
     }
 
+    function backToChampionshipPage() {
+        body.classList.add("page-exit");
+        syncVideoPlaybackState();
+
+        window.setTimeout(function () {
+            window.location.href = "/championship";
+        }, 360);
+    }
+
     function syncToggleState() {
         if (!toggleSectionsButton) {
             return;
@@ -143,6 +153,10 @@
             syncToggleState();
             syncVideoPlaybackState();
         });
+    }
+
+    if (backButton) {
+        backButton.addEventListener("click", backToChampionshipPage);
     }
 
     document.addEventListener("visibilitychange", syncVideoPlaybackState);

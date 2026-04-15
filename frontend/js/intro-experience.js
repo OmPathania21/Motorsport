@@ -15,11 +15,12 @@
     const kidsImage = document.getElementById("kidsImage");
     const kidsCard = document.getElementById("kidsCard");
     const letsRollButton = document.getElementById("letsRollButton");
+    const backButton = document.getElementById("backButton");
 
     let introDone = false;
     let rafPending = false;
     let introDelayTimer = null;
-    let navigatingToChampionship = false;
+    let navigatingAway = false;
     let cachedSceneTop = 0;
     let cachedSceneScrollable = 1;
 
@@ -150,19 +151,36 @@
     attachImageState(startCard, startImage);
     attachImageState(kidsCard, kidsImage);
 
+    function transitionTo(targetUrl) {
+        if (navigatingAway) {
+            return;
+        }
+
+        navigatingAway = true;
+        body.classList.add("transition-out");
+
+        if (letsRollButton) {
+            letsRollButton.disabled = true;
+        }
+
+        if (backButton) {
+            backButton.disabled = true;
+        }
+
+        window.setTimeout(function () {
+            window.location.href = targetUrl;
+        }, PAGE_TRANSITION_MS);
+    }
+
     if (letsRollButton) {
         letsRollButton.addEventListener("click", function () {
-            if (navigatingToChampionship) {
-                return;
-            }
+            transitionTo("/championship");
+        });
+    }
 
-            navigatingToChampionship = true;
-            body.classList.add("transition-out");
-            letsRollButton.disabled = true;
-
-            window.setTimeout(function () {
-                window.location.href = "/championship";
-            }, PAGE_TRANSITION_MS);
+    if (backButton) {
+        backButton.addEventListener("click", function () {
+            transitionTo("/");
         });
     }
 

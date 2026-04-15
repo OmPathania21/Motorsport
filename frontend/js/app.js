@@ -21,6 +21,22 @@ const elements = {
 	resultsTableBody: document.querySelector("#resultsTable tbody"),
 };
 
+const backButton = document.getElementById("backButton");
+
+if (backButton) {
+	backButton.addEventListener("click", () => {
+		const hasSameOriginReferrer = typeof document.referrer === "string"
+			&& document.referrer.startsWith(window.location.origin);
+
+		if (hasSameOriginReferrer && window.history.length > 1) {
+			window.history.back();
+			return;
+		}
+
+		window.location.href = "/intro-experience.html";
+	});
+}
+
 async function fetchJson(path) {
 	const response = await fetch(`${API_BASE}${path}`);
 

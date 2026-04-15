@@ -2,6 +2,7 @@
     const body = document.body;
     const statusEl = document.getElementById("status");
     const gridEl = document.getElementById("championshipGrid");
+    const backButton = document.getElementById("backButton");
 
     function kickOffPageReveal() {
         window.requestAnimationFrame(function () {
@@ -14,6 +15,22 @@
     function setStatus(message, isError) {
         statusEl.textContent = message;
         statusEl.classList.toggle("error", Boolean(isError));
+    }
+
+    function backToPreviousPage() {
+        body.classList.add("page-exit");
+
+        window.setTimeout(function () {
+            const hasSameOriginReferrer = typeof document.referrer === "string"
+                && document.referrer.startsWith(window.location.origin);
+
+            if (hasSameOriginReferrer && window.history.length > 1) {
+                window.history.back();
+                return;
+            }
+
+            window.location.href = "/intro-experience.html";
+        }, 360);
     }
 
     function escapeHtml(value) {
@@ -192,6 +209,10 @@
             setStatus(`Unable to load championships. ${error.message}`, true);
             gridEl.innerHTML = '<div class="empty-state">Please verify backend and MySQL connectivity.</div>';
         }
+    }
+
+    if (backButton) {
+        backButton.addEventListener("click", backToPreviousPage);
     }
 
     kickOffPageReveal();
