@@ -105,7 +105,7 @@ body.data-visible .team-data-page {
 
 .back-button {
     position: fixed;
-    left: 0.9rem;
+    right: 0.9rem;
     top: 0.9rem;
     z-index: 35;
     border: 1px solid rgba(159, 217, 255, 0.5);
