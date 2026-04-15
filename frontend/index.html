@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Motorsport Dashboard</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="background-shape shape-one"></div>
+	<div class="background-shape shape-two"></div>
+
+	<header class="page-header">
+		<h1>Motorsport Championship Explorer</h1>
+		<p>Choose a championship to see teams, drivers, races, and race results from MySQL.</p>
+	</header>
+
+	<main class="layout">
+		<section class="panel panel-championships">
+			<h2>Championships</h2>
+			<p class="subtext">Click one championship to load all linked entities.</p>
+			<div id="loadingChampionships" class="status">Loading championships...</div>
+			<ul id="championshipList" class="list"></ul>
+		</section>
+
+		<section class="panel panel-details">
+			<div class="detail-head">
+				<h2 id="selectedTitle">Select a Championship</h2>
+				<p id="selectedMeta">Data will appear here once you pick a championship.</p>
+				<div id="errorBanner" class="error hidden"></div>
+			</div>
+
+			<div class="detail-grid">
+				<article class="card">
+					<h3>Teams</h3>
+					<ul id="teamsList" class="list compact"></ul>
+				</article>
+
+				<article class="card">
+					<h3>Drivers</h3>
+					<ul id="driversList" class="list compact"></ul>
+				</article>
+
+				<article class="card">
+					<div class="section-head">
+						<h3>Races</h3>
+						<button id="allResultsBtn" class="small-btn hidden" type="button">Show All Results</button>
+					</div>
+					<ul id="racesList" class="list compact"></ul>
+				</article>
+
+				<article class="card card-wide">
+					<h3>Race Results</h3>
+					<div class="table-wrap">
+						<table id="resultsTable">
+							<thead>
+								<tr>
+									<th>Race</th>
+									<th>Team</th>
+									<th>Pos</th>
+									<th>Status</th>
+									<th>Laps</th>
+									<th>Points</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<script src="js/app.js"></script>
+</body>
+</html>
