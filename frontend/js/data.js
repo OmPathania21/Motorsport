@@ -5,6 +5,7 @@
     const teamTableVideo = document.getElementById("teamTableVideo");
     const driverTableVideo = document.getElementById("driverTableVideo");
     const raceSection = document.getElementById("raceSection");
+    const teamSection = document.getElementById("teamSection");
     const toggleSectionsButton = document.getElementById("toggleSectionsButton");
 
     function ensureVideoLoop(videoElement) {
@@ -76,6 +77,33 @@
         }, 420);
     }
 
+    function buildTeamDataUrl() {
+        const currentParams = new URLSearchParams(window.location.search);
+        const nextParams = new URLSearchParams();
+        const championshipId = currentParams.get("championshipId");
+        const championshipName = currentParams.get("championshipName");
+
+        if (championshipId) {
+            nextParams.set("championshipId", championshipId);
+        }
+
+        if (championshipName) {
+            nextParams.set("championshipName", championshipName);
+        }
+
+        const query = nextParams.toString();
+        return query ? `/team-data?${query}` : "/team-data";
+    }
+
+    function openTeamDataPage() {
+        const targetUrl = buildTeamDataUrl();
+        body.classList.add("page-exit");
+
+        window.setTimeout(function () {
+            window.location.href = targetUrl;
+        }, 420);
+    }
+
     function syncToggleState() {
         if (!toggleSectionsButton) {
             return;
@@ -98,6 +126,16 @@
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 openRaceDataPage();
+            }
+        });
+    }
+
+    if (teamSection) {
+        teamSection.addEventListener("click", openTeamDataPage);
+        teamSection.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openTeamDataPage();
             }
         });
     }
