@@ -79,7 +79,7 @@ def add_cors_headers(response):
 
 @app.route("/")
 def home():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(app.static_folder, "intro-experience.html")
 
 
 @app.route("/championship")
