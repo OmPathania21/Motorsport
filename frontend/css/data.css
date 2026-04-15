@@ -263,6 +263,13 @@ body.sections-reveal .data-section {
     display: block;
     min-height: 0;
     padding: 0;
+    cursor: pointer;
+}
+
+.driver-section:focus-visible {
+    outline: none;
+    border-color: rgba(255, 95, 31, 0.78);
+    box-shadow: 0 0 28px rgba(255, 95, 31, 0.26);
 }
 
 .result-section {

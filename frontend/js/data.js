@@ -6,6 +6,7 @@
     const driverTableVideo = document.getElementById("driverTableVideo");
     const raceSection = document.getElementById("raceSection");
     const teamSection = document.getElementById("teamSection");
+    const driverSection = document.getElementById("driverSection");
     const backButton = document.getElementById("backButton");
     const toggleSectionsButton = document.getElementById("toggleSectionsButton");
     const sectionVideos = [raceTableVideo, teamTableVideo, driverTableVideo].filter(Boolean);
@@ -129,6 +130,34 @@
         }, 420);
     }
 
+    function buildDriverDataUrl() {
+        const currentParams = new URLSearchParams(window.location.search);
+        const nextParams = new URLSearchParams();
+        const championshipId = currentParams.get("championshipId");
+        const championshipName = currentParams.get("championshipName");
+
+        if (championshipId) {
+            nextParams.set("championshipId", championshipId);
+        }
+
+        if (championshipName) {
+            nextParams.set("championshipName", championshipName);
+        }
+
+        const query = nextParams.toString();
+        return query ? `/driver-data?${query}` : "/driver-data";
+    }
+
+    function openDriverDataPage() {
+        const targetUrl = buildDriverDataUrl();
+        body.classList.add("page-exit");
+        syncVideoPlaybackState();
+
+        window.setTimeout(function () {
+            window.location.href = targetUrl;
+        }, 420);
+    }
+
     function backToChampionshipPage() {
         body.classList.add("page-exit");
         syncVideoPlaybackState();
@@ -178,6 +207,16 @@
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 openTeamDataPage();
+            }
+        });
+    }
+
+    if (driverSection) {
+        driverSection.addEventListener("click", openDriverDataPage);
+        driverSection.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openDriverDataPage();
             }
         });
     }
