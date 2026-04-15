@@ -5,6 +5,7 @@
     const statusEl = document.getElementById("status");
     const rowsEl = document.getElementById("driverDataRows");
     const backToDataButton = document.getElementById("backToDataButton");
+    const toggleContentButton = document.getElementById("toggleContentButton");
     const queryParams = new URLSearchParams(window.location.search);
 
     function ensureVideoLoop(videoElement) {
@@ -119,12 +120,27 @@
         return query ? `/data?${query}` : "/data";
     }
 
+    function withReloadParam(url) {
+        const parsed = new URL(url, window.location.origin);
+        parsed.searchParams.set("_ts", String(Date.now()));
+        return `${parsed.pathname}${parsed.search}`;
+    }
+
     function backToDataPage() {
         body.classList.add("page-exit");
         syncBackgroundVideoPlayback();
         window.setTimeout(function () {
-            window.location.href = buildDataPageUrl();
+            window.location.href = withReloadParam(buildDataPageUrl());
         }, 360);
+    }
+
+    function syncToggleState() {
+        if (!toggleContentButton) {
+            return;
+        }
+
+        const isHidden = body.classList.contains("content-hidden");
+        toggleContentButton.setAttribute("aria-pressed", String(isHidden));
     }
 
     async function resolveChampionshipContext() {
@@ -198,6 +214,13 @@
         backToDataButton.addEventListener("click", backToDataPage);
     }
 
+    if (toggleContentButton) {
+        toggleContentButton.addEventListener("click", function () {
+            body.classList.toggle("content-hidden");
+            syncToggleState();
+        });
+    }
+
     document.addEventListener("visibilitychange", syncBackgroundVideoPlayback);
     window.addEventListener("focus", syncBackgroundVideoPlayback);
 
@@ -205,4 +228,5 @@
     syncBackgroundVideoPlayback();
     kickOffReveal();
     loadDriverData();
+    syncToggleState();
 })();

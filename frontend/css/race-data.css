@@ -108,6 +108,10 @@ body.page-reveal .race-data-page {
 }
 
 .back-button {
+    position: fixed;
+    left: 0.9rem;
+    top: 0.9rem;
+    z-index: 35;
     border: 1px solid rgba(159, 217, 255, 0.5);
     background: rgba(8, 13, 24, 0.58);
     color: var(--text);
@@ -127,6 +131,40 @@ body.page-reveal .race-data-page {
     background: rgba(11, 20, 35, 0.74);
     border-color: rgba(255, 95, 31, 0.72);
     transform: translateY(-1px);
+}
+
+.bg-toggle-button {
+    position: fixed;
+    left: 0.9rem;
+    bottom: 0.9rem;
+    z-index: 35;
+    min-width: 44px;
+    height: 32px;
+    padding: 0 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(159, 217, 255, 0.5);
+    background: rgba(8, 13, 24, 0.56);
+    color: var(--text);
+    font-family: "Manrope", sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    cursor: pointer;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.34);
+    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.bg-toggle-button:hover {
+    background: rgba(10, 18, 33, 0.75);
+    border-color: rgba(255, 95, 31, 0.72);
+    transform: translateY(-1px);
+}
+
+.bg-toggle-button[aria-pressed="true"] {
+    background: rgba(255, 95, 31, 0.26);
+    border-color: rgba(255, 95, 31, 0.78);
 }
 
 .race-table-shell {
@@ -199,6 +237,12 @@ body.page-exit .race-data-page {
     transform: translateY(-10px) scale(0.988);
 }
 
+body.content-hidden .race-data-page {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(0.985);
+}
+
 @media (max-width: 900px) {
     .race-data-page {
         width: calc(100vw - 1rem);
@@ -222,7 +266,8 @@ body.page-exit .race-data-page {
     .race-data-video,
     body::before,
     .race-data-page,
-    .back-button {
+    .back-button,
+    .bg-toggle-button {
         transition: none !important;
     }
 }

@@ -15,7 +15,6 @@
     const kidsImage = document.getElementById("kidsImage");
     const kidsCard = document.getElementById("kidsCard");
     const letsRollButton = document.getElementById("letsRollButton");
-    const backButton = document.getElementById("backButton");
 
     let introDone = false;
     let rafPending = false;
@@ -163,10 +162,6 @@
             letsRollButton.disabled = true;
         }
 
-        if (backButton) {
-            backButton.disabled = true;
-        }
-
         window.setTimeout(function () {
             window.location.href = targetUrl;
         }, PAGE_TRANSITION_MS);
@@ -175,12 +170,6 @@
     if (letsRollButton) {
         letsRollButton.addEventListener("click", function () {
             transitionTo("/championship");
-        });
-    }
-
-    if (backButton) {
-        backButton.addEventListener("click", function () {
-            transitionTo("/");
         });
     }
 

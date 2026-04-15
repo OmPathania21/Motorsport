@@ -192,7 +192,7 @@
         syncVideoPlaybackState();
 
         window.setTimeout(function () {
-            window.location.href = "/championship";
+            window.location.href = `/championship?_ts=${Date.now()}`;
         }, 360);
     }
 
