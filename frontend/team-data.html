@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/team-data.css">
+</head>
+<body>
+    <video id="teamDataBackgroundVideo" class="team-data-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="Media/Lewis%20Hamilton.mp4" type="video/mp4">
+    </video>
+
+    <main class="team-data-page">
+        <header class="team-data-header">
+            <div>
+                <p class="kicker">SQL TABLE VIEW</p>
+                <h1>Team Data</h1>
+                <p id="contextMeta" class="context-meta">Preparing team table context...</p>
+            </div>
+            <button id="backToDataButton" class="back-button" type="button">Back</button>
+        </header>
+
+        <section class="team-table-shell">
+            <div id="status" class="status" role="status" aria-live="polite">Waiting for intro sequence...</div>
+            <div class="table-wrap">
+                <table class="team-data-table">
+                    <thead>
+                        <tr>
+                            <th>TeamID</th>
+                            <th>TeamName</th>
+                            <th>Manufacturer</th>
+                            <th>ChampionshipID</th>
+                            <th>CarNumber</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamDataRows">
+                        <tr>
+                            <td class="muted-cell" colspan="5">Waiting to reveal data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/team-data.js"></script>
+</body>
+</html>
