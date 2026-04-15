@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/race-data.css">
+</head>
+<body>
+    <video id="raceDataBackgroundVideo" class="race-data-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="Media/Ferrari%20intro.mp4" type="video/mp4">
+    </video>
+
+    <main class="race-data-page">
+        <header class="race-data-header">
+            <div>
+                <p class="kicker">SQL TABLE VIEW</p>
+                <h1>Race Data</h1>
+                <p id="contextMeta" class="context-meta">Loading championship context...</p>
+            </div>
+            <button id="backToDataButton" class="back-button" type="button">Back</button>
+        </header>
+
+        <section class="race-table-shell">
+            <div id="status" class="status" role="status" aria-live="polite">Loading race rows from database...</div>
+            <div class="table-wrap">
+                <table class="race-data-table">
+                    <thead>
+                        <tr>
+                            <th>RaceID</th>
+                            <th>RaceName</th>
+                            <th>TrackName</th>
+                            <th>RaceDate</th>
+                            <th>RaceTime</th>
+                            <th>ChampionshipID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="raceDataRows">
+                        <tr>
+                            <td class="muted-cell" colspan="6">Loading race rows...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/race-data.js"></script>
+</body>
+</html>
