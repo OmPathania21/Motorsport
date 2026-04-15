@@ -3,6 +3,7 @@
     const PAGE_TRANSITION_MS = 1400;
 
     const body = document.body;
+    const introStage = document.getElementById("introStage");
     const introVideo = document.getElementById("introVideo");
     const scrollVideo = document.getElementById("scrollVideo");
     const scrollCue = document.getElementById("scrollCue");
@@ -22,6 +23,50 @@
     let navigatingAway = false;
     let cachedSceneTop = 0;
     let cachedSceneScrollable = 1;
+
+    function isElementInViewport(el) {
+        if (!el) {
+            return false;
+        }
+
+        const rect = el.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+    }
+
+    function safePlay(videoEl) {
+        if (!videoEl) {
+            return;
+        }
+
+        videoEl.play().catch(function () {
+            return null;
+        });
+    }
+
+    function syncViewportVideoPlayback() {
+        if (document.hidden) {
+            return;
+        }
+
+        const introVisible = isElementInViewport(introStage);
+        const scrollVisible = isElementInViewport(scrollScene);
+
+        if (introVideo) {
+            if (introVisible) {
+                safePlay(introVideo);
+            } else if (!introVideo.paused) {
+                introVideo.pause();
+            }
+        }
+
+        if (scrollVideo) {
+            if (introDone && scrollVisible) {
+                safePlay(scrollVideo);
+            } else if (!scrollVideo.paused) {
+                scrollVideo.pause();
+            }
+        }
+    }
 
     function recalculateSceneMetrics() {
         cachedSceneTop = scrollScene ? scrollScene.offsetTop : 0;
@@ -110,6 +155,8 @@
             return;
         }
 
+        introVideo.loop = true;
+
         introVideo.play()
             .then(function () {
                 body.classList.add("intro-playing");
@@ -195,26 +242,21 @@
             return;
         }
 
-        if (!introDone && introVideo) {
-            introVideo.play().catch(function () {
-                return null;
-            });
-        }
-
-        if (introDone && scrollVideo) {
-            scrollVideo.play().catch(function () {
-                return null;
-            });
-        }
+        syncViewportVideoPlayback();
     });
 
-    window.addEventListener("scroll", requestSceneProgressUpdate, { passive: true });
+    window.addEventListener("scroll", function () {
+        requestSceneProgressUpdate();
+        syncViewportVideoPlayback();
+    }, { passive: true });
     window.addEventListener("resize", function () {
         recalculateSceneMetrics();
         requestSceneProgressUpdate();
+        syncViewportVideoPlayback();
     });
 
     recalculateSceneMetrics();
+    syncViewportVideoPlayback();
 
     window.setTimeout(function () {
         startIntroPlayback();
