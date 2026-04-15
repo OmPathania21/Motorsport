@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorsport Intro Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/intro-experience.css">
+</head>
+<body class="intro-lock">
+    <div class="page-shell">
+        <section class="intro-stage" id="introStage">
+            <video id="introVideo" class="intro-video" muted playsinline preload="auto" poster="Media/intro_picture.png">
+                <source src="Media/bg.mp4" type="video/mp4">
+            </video>
+
+            <div class="dark-curtain" aria-hidden="true"></div>
+
+            <div id="scrollCue" class="scroll-cue hidden" aria-hidden="true">
+                <span>Scroll to continue</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <section id="scrollScene" class="scroll-scene" aria-hidden="true">
+            <div id="sceneFrame" class="scene-frame">
+                <article class="scene-video-card" aria-label="Video panel">
+                    <video id="scrollVideo" class="scene-video" muted loop playsinline preload="metadata" poster="Media/intro_picture.png">
+                        <source src="Media/bg.mp4" type="video/mp4">
+                    </video>
+                </article>
+
+                <article id="imageCard" class="scene-image-card" aria-label="Intro image panel">
+                    <img
+                        id="sceneImage"
+                        src="Media/intro_picture.png"
+                        alt="Intro motorsport visual"
+                        loading="eager"
+                    >
+                    <div class="image-fallback">Add Media/intro_picture.png</div>
+                </article>
+
+                <article id="startCard" class="start-image-card" aria-label="Start image panel">
+                    <img
+                        id="startImage"
+                        src="Media/start.png"
+                        alt="Start visual"
+                        loading="eager"
+                    >
+                    <div class="image-fallback">Add Media/start.png</div>
+                </article>
+            </div>
+        </section>
+
+        <section id="postScrollStage" class="post-scroll-stage" aria-label="Let's Roll section">
+            <div class="post-roll-left">
+                <button id="letsRollButton" class="lets-roll-sign" type="button">Let's Roll</button>
+            </div>
+
+            <article id="kidsCard" class="kids-image-card" aria-label="Kids image panel">
+                <img
+                    id="kidsImage"
+                    src="Media/kids.png"
+                    alt="Kids visual"
+                    loading="eager"
+                >
+                <div class="image-fallback">Add Media/kids.png</div>
+            </article>
+        </section>
+    </div>
+
+    <div id="pageTransition" class="page-transition" aria-hidden="true"></div>
+
+    <script src="js/intro-experience.js"></script>
+</body>
+</html>
