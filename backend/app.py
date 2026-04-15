@@ -107,6 +107,11 @@ def driver_data_page():
     return send_from_directory(app.static_folder, "driver-data.html")
 
 
+@app.route("/result-data")
+def result_data_page():
+    return send_from_directory(app.static_folder, "result-data.html")
+
+
 @app.route("/Media/<path:filename>")
 def media(filename):
     return send_from_directory(MEDIA_FOLDER, filename)

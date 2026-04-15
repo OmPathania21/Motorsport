@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Data</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/result-data.css">
+</head>
+<body>
+    <video id="resultDataBackgroundVideo" class="result-data-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="Media/RaceResult.mp4" type="video/mp4">
+    </video>
+
+    <main class="result-data-page">
+        <header class="result-data-header">
+            <div>
+                <p class="kicker">SQL TABLE VIEW</p>
+                <h1>Result Data</h1>
+                <p id="contextMeta" class="context-meta">Loading championship context...</p>
+            </div>
+            <button id="backToDataButton" class="back-button" type="button">Back</button>
+        </header>
+
+        <section class="result-table-shell">
+            <div id="status" class="status" role="status" aria-live="polite">Loading result rows from database...</div>
+            <div class="table-wrap">
+                <table class="result-data-table">
+                    <thead>
+                        <tr>
+                            <th>ResultID</th>
+                            <th>RaceID</th>
+                            <th>RaceName</th>
+                            <th>TeamID</th>
+                            <th>TeamName</th>
+                            <th>FinalPosition</th>
+                            <th>Status</th>
+                            <th>LapsCompleted</th>
+                            <th>PointsEarned</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultDataRows">
+                        <tr>
+                            <td class="muted-cell" colspan="9">Loading result rows...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/result-data.js"></script>
+</body>
+</html>

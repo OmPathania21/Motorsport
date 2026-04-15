@@ -7,6 +7,7 @@
     const raceSection = document.getElementById("raceSection");
     const teamSection = document.getElementById("teamSection");
     const driverSection = document.getElementById("driverSection");
+    const resultSection = document.getElementById("resultSection");
     const backButton = document.getElementById("backButton");
     const toggleSectionsButton = document.getElementById("toggleSectionsButton");
     const sectionVideos = [raceTableVideo, teamTableVideo, driverTableVideo].filter(Boolean);
@@ -158,6 +159,34 @@
         }, 420);
     }
 
+    function buildResultDataUrl() {
+        const currentParams = new URLSearchParams(window.location.search);
+        const nextParams = new URLSearchParams();
+        const championshipId = currentParams.get("championshipId");
+        const championshipName = currentParams.get("championshipName");
+
+        if (championshipId) {
+            nextParams.set("championshipId", championshipId);
+        }
+
+        if (championshipName) {
+            nextParams.set("championshipName", championshipName);
+        }
+
+        const query = nextParams.toString();
+        return query ? `/result-data?${query}` : "/result-data";
+    }
+
+    function openResultDataPage() {
+        const targetUrl = buildResultDataUrl();
+        body.classList.add("page-exit");
+        syncVideoPlaybackState();
+
+        window.setTimeout(function () {
+            window.location.href = targetUrl;
+        }, 420);
+    }
+
     function backToChampionshipPage() {
         body.classList.add("page-exit");
         syncVideoPlaybackState();
@@ -217,6 +246,16 @@
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 openDriverDataPage();
+            }
+        });
+    }
+
+    if (resultSection) {
+        resultSection.addEventListener("click", openResultDataPage);
+        resultSection.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openResultDataPage();
             }
         });
     }
