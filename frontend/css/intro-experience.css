@@ -25,13 +25,20 @@ body {
 }
 
 .page-shell {
-    transition: opacity 1.25s ease, transform 1.25s ease, filter 1.25s ease;
+    transition: opacity 1.25s ease, transform 1.25s ease;
 }
 
 body.transition-out .page-shell {
     opacity: 0.05;
     transform: scale(1.015);
-    filter: blur(7px) brightness(0.48);
+}
+
+.page-shell,
+.scene-video-card,
+.scene-image-card,
+.start-image-card,
+.kids-image-card {
+    will-change: transform, opacity;
 }
 
 .page-transition {
@@ -415,5 +422,22 @@ body.intro-done .dark-curtain {
     .kids-image-card {
         width: min(66vw, 320px);
         margin-left: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-line {
+        animation: none;
+    }
+
+    .page-shell,
+    .page-transition,
+    .intro-video,
+    .dark-curtain,
+    .scene-video-card,
+    .scene-image-card,
+    .start-image-card,
+    .lets-roll-sign {
+        transition: none !important;
     }
 }

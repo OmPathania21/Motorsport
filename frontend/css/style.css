@@ -28,7 +28,7 @@ body {
 .background-shape {
 	position: fixed;
 	pointer-events: none;
-	filter: blur(38px);
+	filter: blur(24px);
 	z-index: 0;
 }
 
@@ -83,7 +83,7 @@ body {
 	background: var(--panel);
 	border: 1px solid var(--panel-border);
 	border-radius: 18px;
-	backdrop-filter: blur(8px);
+	backdrop-filter: blur(3px);
 	box-shadow: 0 18px 34px rgba(2, 7, 22, 0.35);
 }
 

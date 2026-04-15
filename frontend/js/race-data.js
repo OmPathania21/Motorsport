@@ -13,26 +13,41 @@
         }
 
         function tryPlay() {
+            if (document.hidden || body.classList.contains("page-exit")) {
+                return;
+            }
+
             videoElement.play().catch(function () {
                 return null;
             });
         }
 
+        videoElement.loop = true;
+        videoElement.addEventListener("loadeddata", tryPlay);
         videoElement.addEventListener("canplay", tryPlay);
-        videoElement.addEventListener("pause", tryPlay);
-        videoElement.addEventListener("ended", function () {
-            videoElement.currentTime = 0;
-            tryPlay();
-        });
-
-        document.addEventListener("visibilitychange", function () {
-            if (!document.hidden) {
-                tryPlay();
-            }
-        });
-
         window.addEventListener("focus", tryPlay);
-        tryPlay();
+    }
+
+    function setVideoPlayback(videoElement, shouldPlay) {
+        if (!videoElement) {
+            return;
+        }
+
+        if (shouldPlay) {
+            videoElement.play().catch(function () {
+                return null;
+            });
+            return;
+        }
+
+        if (!videoElement.paused) {
+            videoElement.pause();
+        }
+    }
+
+    function syncBackgroundVideoPlayback() {
+        const shouldPlay = !document.hidden && !body.classList.contains("page-exit");
+        setVideoPlayback(backgroundVideo, shouldPlay);
     }
 
     function kickOffReveal() {
@@ -120,6 +135,7 @@
 
     function backToDataPage() {
         body.classList.add("page-exit");
+        syncBackgroundVideoPlayback();
         window.setTimeout(function () {
             window.location.href = buildDataPageUrl();
         }, 360);
@@ -196,7 +212,11 @@
         backToDataButton.addEventListener("click", backToDataPage);
     }
 
+    document.addEventListener("visibilitychange", syncBackgroundVideoPlayback);
+    window.addEventListener("focus", syncBackgroundVideoPlayback);
+
     ensureVideoLoop(backgroundVideo);
+    syncBackgroundVideoPlayback();
     kickOffReveal();
     loadRaceData();
 })();

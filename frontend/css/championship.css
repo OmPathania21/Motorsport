@@ -69,7 +69,7 @@ body.page-reveal .bg-grid {
     width: 34rem;
     height: 34rem;
     border-radius: 50%;
-    filter: blur(72px);
+    filter: blur(54px);
     z-index: 0;
     pointer-events: none;
     opacity: 0;
@@ -100,14 +100,12 @@ body.page-reveal .glow {
     padding: clamp(1.2rem, 2.8vw, 2.4rem) 0 2.2rem;
     opacity: 0;
     transform: translateY(26px) scale(0.985);
-    filter: blur(10px);
-    transition: opacity 1.7s ease 0.25s, transform 1.7s ease 0.25s, filter 1.7s ease 0.25s;
+    transition: opacity 1.4s ease 0.2s, transform 1.4s ease 0.2s;
 }
 
 body.page-reveal .page-wrap {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
 }
 
 .page-head {
@@ -168,11 +166,9 @@ body.page-reveal .cards-section {
     cursor: pointer;
     opacity: 0;
     transform: translateY(30px) scale(0.985);
-    filter: blur(8px);
     transition:
         opacity 950ms ease,
         transform 1s cubic-bezier(0.2, 0.75, 0.15, 1),
-        filter 950ms ease,
         border-color 180ms ease,
         box-shadow 180ms ease;
     transition-delay: var(--card-delay, 0ms);
@@ -186,7 +182,6 @@ body.page-reveal .cards-section {
 body.cards-reveal .championship-card {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
 }
 
 .championship-card:nth-child(even) {
@@ -319,5 +314,16 @@ body.cards-reveal .championship-card {
 
     .championship-card:nth-child(even) {
         margin-top: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-wrap,
+    .cards-section,
+    .championship-card,
+    body::before,
+    .bg-grid,
+    .glow {
+        transition: none !important;
     }
 }

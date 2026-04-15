@@ -20,6 +20,14 @@
     let rafPending = false;
     let introDelayTimer = null;
     let navigatingToChampionship = false;
+    let cachedSceneTop = 0;
+    let cachedSceneScrollable = 1;
+
+    function recalculateSceneMetrics() {
+        cachedSceneTop = scrollScene ? scrollScene.offsetTop : 0;
+        const total = scrollScene ? (scrollScene.offsetHeight - window.innerHeight) : 1;
+        cachedSceneScrollable = Math.max(total, 1);
+    }
 
     function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
@@ -48,9 +56,8 @@
             return;
         }
 
-        const totalScroll = scrollScene.offsetHeight - window.innerHeight;
-        const current = window.scrollY - scrollScene.offsetTop;
-        const rawProgress = totalScroll > 0 ? current / totalScroll : 0;
+        const current = window.scrollY - cachedSceneTop;
+        const rawProgress = current / cachedSceneScrollable;
         const p = clamp(rawProgress, 0, 1);
 
         const videoStage = easeOutCubic(stageProgress(p, 0.0, 0.52));
@@ -84,6 +91,8 @@
         body.classList.add("intro-done");
         scrollScene.removeAttribute("aria-hidden");
         scrollCue.classList.remove("hidden");
+
+        recalculateSceneMetrics();
 
         if (scrollVideo) {
             scrollVideo.currentTime = 0;
@@ -167,8 +176,38 @@
         });
     }
 
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            if (introVideo && !introVideo.paused) {
+                introVideo.pause();
+            }
+
+            if (scrollVideo && !scrollVideo.paused) {
+                scrollVideo.pause();
+            }
+            return;
+        }
+
+        if (!introDone && introVideo) {
+            introVideo.play().catch(function () {
+                return null;
+            });
+        }
+
+        if (introDone && scrollVideo) {
+            scrollVideo.play().catch(function () {
+                return null;
+            });
+        }
+    });
+
     window.addEventListener("scroll", requestSceneProgressUpdate, { passive: true });
-    window.addEventListener("resize", requestSceneProgressUpdate);
+    window.addEventListener("resize", function () {
+        recalculateSceneMetrics();
+        requestSceneProgressUpdate();
+    });
+
+    recalculateSceneMetrics();
 
     window.setTimeout(function () {
         startIntroPlayback();

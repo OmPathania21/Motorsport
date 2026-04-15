@@ -7,6 +7,7 @@
     const raceSection = document.getElementById("raceSection");
     const teamSection = document.getElementById("teamSection");
     const toggleSectionsButton = document.getElementById("toggleSectionsButton");
+    const sectionVideos = [raceTableVideo, teamTableVideo, driverTableVideo].filter(Boolean);
 
     function ensureVideoLoop(videoElement) {
         if (!videoElement) {
@@ -14,26 +15,47 @@
         }
 
         function tryPlay() {
+            if (document.hidden) {
+                return;
+            }
+
             videoElement.play().catch(function () {
                 return null;
             });
         }
 
+        videoElement.loop = true;
+        videoElement.addEventListener("loadeddata", tryPlay);
         videoElement.addEventListener("canplay", tryPlay);
-        videoElement.addEventListener("pause", tryPlay);
-        videoElement.addEventListener("ended", function () {
-            videoElement.currentTime = 0;
-            tryPlay();
-        });
-
-        document.addEventListener("visibilitychange", function () {
-            if (!document.hidden) {
-                tryPlay();
-            }
-        });
-
         window.addEventListener("focus", tryPlay);
-        tryPlay();
+    }
+
+    function setVideoPlayback(videoElement, shouldPlay) {
+        if (!videoElement) {
+            return;
+        }
+
+        if (shouldPlay) {
+            videoElement.play().catch(function () {
+                return null;
+            });
+            return;
+        }
+
+        if (!videoElement.paused) {
+            videoElement.pause();
+        }
+    }
+
+    function syncVideoPlaybackState() {
+        const canPlay = !document.hidden;
+        const sectionsVisible = !body.classList.contains("sections-hidden") && !body.classList.contains("page-exit");
+
+        setVideoPlayback(backgroundVideo, canPlay);
+
+        sectionVideos.forEach(function (videoElement) {
+            setVideoPlayback(videoElement, canPlay && sectionsVisible);
+        });
     }
 
     function kickOffReveal() {
@@ -71,6 +93,7 @@
     function openRaceDataPage() {
         const targetUrl = buildRaceDataUrl();
         body.classList.add("page-exit");
+        syncVideoPlaybackState();
 
         window.setTimeout(function () {
             window.location.href = targetUrl;
@@ -98,6 +121,7 @@
     function openTeamDataPage() {
         const targetUrl = buildTeamDataUrl();
         body.classList.add("page-exit");
+        syncVideoPlaybackState();
 
         window.setTimeout(function () {
             window.location.href = targetUrl;
@@ -117,8 +141,12 @@
         toggleSectionsButton.addEventListener("click", function () {
             body.classList.toggle("sections-hidden");
             syncToggleState();
+            syncVideoPlaybackState();
         });
     }
+
+    document.addEventListener("visibilitychange", syncVideoPlaybackState);
+    window.addEventListener("focus", syncVideoPlaybackState);
 
     if (raceSection) {
         raceSection.addEventListener("click", openRaceDataPage);
@@ -144,6 +172,7 @@
     ensureVideoLoop(raceTableVideo);
     ensureVideoLoop(teamTableVideo);
     ensureVideoLoop(driverTableVideo);
+    syncVideoPlaybackState();
     kickOffReveal();
     revealSections();
     syncToggleState();
