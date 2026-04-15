@@ -243,6 +243,11 @@ body.content-hidden .race-data-page {
     transform: translateY(12px) scale(0.985);
 }
 
+body.content-hidden .race-data-video {
+    opacity: 0.55;
+    filter: brightness(0.64) saturate(1.12) contrast(1.07);
+}
+
 @media (max-width: 900px) {
     .race-data-page {
         width: calc(100vw - 1rem);

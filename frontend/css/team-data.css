@@ -239,6 +239,15 @@ body.content-hidden .team-data-page {
     transform: translateY(12px) scale(0.985);
 }
 
+body.content-hidden .team-data-video {
+    opacity: 0.56;
+    filter: brightness(0.68) saturate(1.12) contrast(1.06);
+}
+
+body.content-hidden::before {
+    opacity: 0.18;
+}
+
 @media (max-width: 900px) {
     .team-data-page {
         width: calc(100vw - 1rem);

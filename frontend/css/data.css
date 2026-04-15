@@ -453,6 +453,11 @@ body.sections-hidden .data-page {
     transform: translateY(14px) scale(0.985);
 }
 
+body.sections-hidden .data-video {
+    opacity: 0.52;
+    filter: brightness(0.62) saturate(1.12) contrast(1.06);
+}
+
 body.page-exit .data-page {
     opacity: 0;
     transform: translateY(-10px) scale(0.986);
